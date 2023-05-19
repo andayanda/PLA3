@@ -1,6 +1,7 @@
 <?php
 	session_start();
-// session_destroy();
+	// session_destroy();
+
 		//inicialización de variables y constantes
 		
 		//array para guardar las personas
@@ -30,8 +31,7 @@
 		}
 
 		if (!empty ($errors)) {
-			throw new Exception($errors);	
-		
+			throw new Exception($errors);			
 		}
 		//validar que el nif no exista en el array
 		if (array_key_exists($nif, $personas)){
@@ -57,6 +57,8 @@
 	//BAJA DE TODAS LAS PERSONAS
 
 		//inicializar el array
+		if (isset($_POST['baja'])){
+			$personas =[];}			
 		
 	//BAJA DE LA PERSONA SELECCIONADA EN LA TABLA
 	
