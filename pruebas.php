@@ -56,9 +56,23 @@ if (count($matriz1) == count($matriz2))
 for ($i=0;$i<count($matriz1);$i++)
 array_push($matrizsuma,($matriz1[$i]+$matriz2[$i]));
 var_dump($matrizsuma);
-print_r($matriz1,);
+print_r($matriz1);
 print_r($matriz2);
 print_r($matrizsuma);
 
+$bikes = array (
+    array("CRF300L",28,19.5),
+    array("CBR600RR",70,33),
+    array("KTM390 ",40,10)
+    );
+    foreach ($bikes as $bike){
+        echo $bike[0]."<br>";
+        echo $bike[1]."<br>";
+        echo $bike[2]."<br>";
+        echo "<br>";
+       }
+echo "<pre>";
+print_r($bikes);
+echo "</pre>";
 
 ?>
