@@ -1,31 +1,59 @@
 <?php
 	session_start();
-	
-
-	//inicialización de constantes y variables
-	
-
-	//array para guardar las personas
-
-	//si existe la variable de sesión substituyo el contenido del array
-	
-
-	//ALTA DE PERSONA
+// session_destroy();
+		//inicialización de variables y constantes
+		
+		//array para guardar las personas
+		// $personas [''];
+		//si existe la variable de sesión substituyo el contenido del array
+		$personas=$_SESSION ['personas'] ?? [];
+// if(isset($_SESSION['datos'])) extract($_SESSION['datos']); con servicio
+		//Alta de persona
+		if (isset($_POST['alta'])){
 
 		//recuperar los datos sin espacios en blanco -trim()-
+		$nif= trim($_POST['nif']);
+		$nom= trim($_POST['nombre']);
+		$addr= trim($_POST['direccion']);
+	try{
 
 		//validar datos obligatorios
+		$errors='';
+		if (empty($nif)) {
+			$errors .= "Nif obligatori<br>";
+		}
+		if (empty($nom)) {
+            $errors.= "Nom obligatori<br>";
+        }
+		if (empty($addr)) {
+            $errors.= "Adreça obligatoria<br>";
+		}
 
+		if (!empty ($errors)) {
+			throw new Exception($errors);	
+		
+		}
 		//validar que el nif no exista en el array
+		if (array_key_exists($nif, $personas)){
+			throw new Exception("El Nif $nif ya existe");
+		}
 
 		//convertimos el nombre y dirección en minúsculas con la primera letra en mayúsculas (opcional)
-
-		//guardar la persona en el array
+		//guardar la persona en el array. 3 dimensiones
+		//				1		2		3
+		$personas [$nif] ['nombre']=$nom;
+		$personas [$nif] ['direccion']=$addr;
 
 		//mensaje de alta efectuada
+		$mensajes= 'Alta efectuada';
 
 		//limpiar el formulario
+		$nif =$nom =$addr = null;
 
+	}
+ 		catch (Exception $error) {
+	$mensajes = $error ->getMessage();
+	} };
 	//BAJA DE TODAS LAS PERSONAS
 
 		//inicializar el array
@@ -64,6 +92,9 @@
 	
 	//volcar el contenido del array en la variable de sesión
 
+$_SESSION ['personas']=$personas;
+// con servicio altapersona.php
+// $_SESSION['datos']=compact('nif','nom','addr','mensajes')
 ?>
 <html>
 <head>
@@ -76,29 +107,31 @@
 	<main>
 		<h1 class='centrar'>PLA03: MANTENIMIENTO PERSONAS</h1>
 		<br>
-		<form method='post' action='#'>
+		<!-- con servicio action='altapersona.php' -->
+		<form method='post' action='#'> 
+			
 		  <div class="row mb-3">
-		    <label for="nif" class="col-sm-2 col-form-label">Nif</label>
+		    <label for="nif" class="col-sm-2 col-form-label" value= "<?php echo $nif ?? null; ?>";>Nif</label>
 		    <div class="col-sm-10">
 		      <input type="text" class="form-control" id="nif" name='nif'>
 		    </div>
 		  </div>
 		  <div class="row mb-3">
-		    <label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
+		    <label for="nombre" class="col-sm-2 col-form-label" >Nombre</label>
 		    <div class="col-sm-10">
-		      <input type="text" class="form-control" id="nombre" name="nombre">
+		      <input type="text" class="form-control" id="nombre" name="nombre" value= "<?php echo $nom ?? null; ?>">
 		    </div>
 		  </div>
 		  <div class="row mb-3">
 		    <label for="direccion" class="col-sm-2 col-form-label">Dirección</label>
 		    <div class="col-sm-10">
-		      <input type="text" class="form-control" id="direccion" name="direccion">
+		      <input type="text" class="form-control" id="direccion" name="direccion" value= "<?php echo $addr ?? null; ?>">
 		    </div>
 		  </div>
 		  <label for="nombre" class="col-sm-2 col-form-label"></label>
 		  <button type="submit" class="btn btn-success" name='alta'>Alta persona</button>
 		  <br>
-		  <span></span>
+		  <span><?php echo $mensajes ?? null; ?></span>
 		</form><br>
 
 		<table class="table table-striped">
@@ -120,7 +153,7 @@
 
 		<form method='post' action='#' id='formularioBaja'>
 			<input type='hidden' id='baja' name='baja'></input>
-			<button type="submit" class="btn btn-danger" id='baja' name='baja'>Baja personas</button>
+			<button type="submit" class="btn btn-danger" id='' name='baja'>Baja personas</button>
 		</form>
 
 		<!--FORMULARIO OCULTO PARA LA MODIFICACION-->
@@ -135,3 +168,8 @@
 	<script type="text/javascript" src='js/scripts.js'></script>
 </body>
 </html>
+<?php
+echo "<pre>";
+	print_r ($_SESSION ['personas']);
+echo "</pre>";
+?>
