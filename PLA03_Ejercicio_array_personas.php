@@ -143,19 +143,19 @@ $_SESSION ['personas']=$personas;
 		<table class="table table-striped">
 			<tr class='table-dark'><th scope="col">NIF</th><th scope="col">Nombre</th><th scope="col">Dirección</th><th scope="col"></th></tr>
 			<?php
-			// foreach($personas as $nif => $persona)
-			// {
-			// 	echo "<tr><td>$nif</td>
-			// 	<td>$persona['nombre']</td>
-			// 	<td>$persona['direccion']</td>
-			// 	<td></td></tr>"
-			// }						
+			foreach($personas as $nif => $persona)
+			{
+				echo "<tr><td>$nif</td>
+				<td>$persona[nombre]</td>
+				<td>$persona[direccion]</td>
+				<td></td></tr>";
+			}						
              
         ?>
-			<!-- < <tr>
-		      <td>40000000A</td>
+			<tr>
+		      <!-- <td>40000000A</td>
 		      <td><input type='text' value='Fulano' class='nombre'></td>
-		      <td><input type='text' value='Graveyard avenue, 66' class='direccion'></td>
+		      <td><input type='text' value='Graveyard avenue, 66' class='direccion'></td> -->
 		      <td>
 		      	<form method='post' action='#'>
 		      		<input type='hidden' name='nifBaja' value='40000000A'>
@@ -163,7 +163,7 @@ $_SESSION ['personas']=$personas;
 		      	</form>
 		      	<button type="button" class="btn btn-primary" name='modiPersona'>Modificar</button>
 		      </td>
-		    </tr> -->
+		    </tr>
 		</table>
 
 		<form method='post' action='#' id='formularioBaja'>
