@@ -51,12 +51,7 @@
 		//limpiar el formulario
 		$nif =$nom =$addr = null;
 
-		foreach ($personas as $nif => $persona ) {
-			foreach ($persona as $nombre => $value){
-				print "A este nif: ".$nif." corresponde el o la ".$nombre." : ".$value. "<br>";
-				
-			}
-		}		
+		
 		 
 	 }
 	
@@ -147,10 +142,19 @@ $_SESSION ['personas']=$personas;
 
 		<table class="table table-striped">
 			<tr class='table-dark'><th scope="col">NIF</th><th scope="col">Nombre</th><th scope="col">Dirección</th><th scope="col"></th></tr>
-			<?=$filasTabla?>
-			<!-- <tr>
+			<?php
+			// foreach($personas as $nif => $persona)
+			// {
+			// 	echo "<tr><td>$nif</td>
+			// 	<td>$persona['nombre']</td>
+			// 	<td>$persona['direccion']</td>
+			// 	<td></td></tr>"
+			// }						
+             
+        ?>
+			<!-- < <tr>
 		      <td>40000000A</td>
-		      <td><input type='text' value='O-Ren Ishii' class='nombre'></td>
+		      <td><input type='text' value='Fulano' class='nombre'></td>
 		      <td><input type='text' value='Graveyard avenue, 66' class='direccion'></td>
 		      <td>
 		      	<form method='post' action='#'>
