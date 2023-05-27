@@ -1,68 +1,31 @@
 <?php
 	session_start();
-	
 
 	//inicialización de constantes y variables
-	
 
 	//array para guardar las personas
 
 	//si existe la variable de sesión substituyo el contenido del array
-	$personas=$_SESSION ['personas'] ?? [];
 
 	//ALTA DE PERSONA
-	if (isset($_POST['alta'])){
+
 		//recuperar los datos sin espacios en blanco -trim()-
-		$nif= trim($_POST['nif']);
-		$nom= trim($_POST['nombre']);
-		$addr= trim($_POST['direccion']);
-	try{
 
 		//validar datos obligatorios
-		$errors='';
-		if (empty($nif)) {
-			$errors .= "Nif obligatori<br>";
-		}
-		if (empty($nom)) {
-            $errors.= "Nom obligatori<br>";
-        }
-		if (empty($addr)) {
-            $errors.= "Adreça obligatoria<br>";
-		}
-
-		if (!empty ($errors)) {
-			throw new Exception($errors);			
-		}
 
 		//validar que el nif no exista en el array
-		if (array_key_exists($nif, $personas)){
-			throw new Exception("El Nif $nif ya existe");
-		}
-		
+
 		//convertimos el nombre y dirección en minúsculas con la primera letra en mayúsculas (opcional)
-		//guardar la persona en el array. 3 dimensiones
-		//				1		2		3
-		$personas [$nif] ['nombre']=$nom;
-		$personas [$nif] ['direccion']=$addr;
-		
+
+		//guardar la persona en el array
+
 		//mensaje de alta efectuada
-		$mensajes= 'Alta efectuada';
 
 		//limpiar el formulario
-		$nif =$nom =$addr = null;
 
-		
-		 
-	 }
-	
- 		catch (Exception $error) {
-	$mensajes = $error ->getMessage();
-	} };
 	//BAJA DE TODAS LAS PERSONAS
 
 		//inicializar el array
-		if (isset($_POST['baja'])){
-			$personas =[];}			
 		
 	//BAJA DE LA PERSONA SELECCIONADA EN LA TABLA
 	
@@ -98,9 +61,6 @@
 	
 	//volcar el contenido del array en la variable de sesión
 
-$_SESSION ['personas']=$personas;
-// con servicio altapersona.php
-// $_SESSION['datos']=compact('nif','nom','addr','mensajes')
 ?>
 <html>
 <head>
@@ -113,49 +73,38 @@ $_SESSION ['personas']=$personas;
 	<main>
 		<h1 class='centrar'>PLA03: MANTENIMIENTO PERSONAS</h1>
 		<br>
-		<!-- con servicio action='altapersona.php' -->
-		<form method='post' action='#'> 
-			
+		<form method='post' action='#'>
 		  <div class="row mb-3">
-		    <label for="nif" class="col-sm-2 col-form-label" value= "<?php echo $nif ?? null; ?>";>Nif</label>
+		    <label for="nif" class="col-sm-2 col-form-label">Nif</label>
 		    <div class="col-sm-10">
 		      <input type="text" class="form-control" id="nif" name='nif'>
 		    </div>
 		  </div>
 		  <div class="row mb-3">
-		    <label for="nombre" class="col-sm-2 col-form-label" >Nombre</label>
+		    <label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
 		    <div class="col-sm-10">
-		      <input type="text" class="form-control" id="nombre" name="nombre" value= "<?php echo $nom ?? null; ?>">
+		      <input type="text" class="form-control" id="nombre" name="nombre">
 		    </div>
 		  </div>
 		  <div class="row mb-3">
 		    <label for="direccion" class="col-sm-2 col-form-label">Dirección</label>
 		    <div class="col-sm-10">
-		      <input type="text" class="form-control" id="direccion" name="direccion" value= "<?php echo $addr ?? null; ?>">
+		      <input type="text" class="form-control" id="direccion" name="direccion">
 		    </div>
 		  </div>
 		  <label for="nombre" class="col-sm-2 col-form-label"></label>
 		  <button type="submit" class="btn btn-success" name='alta'>Alta persona</button>
 		  <br>
-		  <span><?php echo $mensajes ?? null; ?></span>
+		  <span></span>
 		</form><br>
 
 		<table class="table table-striped">
 			<tr class='table-dark'><th scope="col">NIF</th><th scope="col">Nombre</th><th scope="col">Dirección</th><th scope="col"></th></tr>
-			<?php
-			foreach($personas as $nif => $persona)
-			{
-				echo "<tr><td>$nif</td>
-				<td>$persona[nombre]</td>
-				<td>$persona[direccion]</td>
-				<td></td></tr>";
-			}						
-             
-        ?>
-			<tr>
-		      <!-- <td>40000000A</td>
-		      <td><input type='text' value='Fulano' class='nombre'></td>
-		      <td><input type='text' value='Graveyard avenue, 66' class='direccion'></td> -->
+			<?=$filasTabla?>
+			<!--tr>
+		      <td>40000000A</td>
+		      <td><input type='text' value='O-Ren Ishii' class='nombre'></td>
+		      <td><input type='text' value='Graveyard avenue, 66' class='direccion'></td>
 		      <td>
 		      	<form method='post' action='#'>
 		      		<input type='hidden' name='nifBaja' value='40000000A'>
@@ -163,12 +112,12 @@ $_SESSION ['personas']=$personas;
 		      	</form>
 		      	<button type="button" class="btn btn-primary" name='modiPersona'>Modificar</button>
 		      </td>
-		    </tr>
+		    </tr-->
 		</table>
 
 		<form method='post' action='#' id='formularioBaja'>
 			<input type='hidden' id='baja' name='baja'></input>
-			<button type="submit" class="btn btn-danger" id='' name='baja'>Baja personas</button>
+			<button type="submit" class="btn btn-danger" id='baja' name='baja'>Baja personas</button>
 		</form>
 
 		<!--FORMULARIO OCULTO PARA LA MODIFICACION-->
@@ -183,8 +132,3 @@ $_SESSION ['personas']=$personas;
 	<script type="text/javascript" src='js/scripts.js'></script>
 </body>
 </html>
-<?php
-echo "<pre>";
-	print_r ($_SESSION ['personas']);
-echo "</pre>";
-?>
